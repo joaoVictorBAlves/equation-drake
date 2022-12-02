@@ -1,6 +1,7 @@
 from Vertex import Vertex
 from Edge import Edge
 
+
 class Graph:
     def __init__(self):
         self.vertices = []

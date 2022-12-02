@@ -8,6 +8,10 @@ class Vertex:
     def data(self):
         return self.__data
 
+    @property
+    def value(self):
+        return self.__data[1]
+
     def set_data(self, elem):
         self.__data = elem
 
@@ -18,6 +22,7 @@ class Vertex:
     @property
     def out_edges(self):
         return self.__out_edges
+
 
     def add_in_edge(self, edge):
         self.__in_edges.append(edge)
