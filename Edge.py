@@ -1,8 +1,8 @@
 class Edge:
     def __init__(self, weight, out_vertex, in_vertex):
-        self.__weight = weight  # Weight of edge
-        self.__beginner = out_vertex  # Vertex A
-        self.__end = in_vertex  # Vertex B
+        self.__weight = weight
+        self.__beginner = out_vertex
+        self.__end = in_vertex
 
     @property
     def weight(self):
