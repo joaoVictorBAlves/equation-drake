@@ -33,4 +33,4 @@ class Vertex:
                 return self.__out_edges[i]
 
     def __str__(self):
-        return str(self.__data)
+        return str(self.__data[0].__str__())
