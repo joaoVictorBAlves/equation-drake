@@ -8,17 +8,17 @@ class Simulator:
 
     def start_world(self):
         """ Create all the variables """
-        self.galaxyGraph.add_vertex(("R", 2))
+        self.galaxyGraph.add_vertex(("R", 2.0))
         self.galaxyGraph.add_vertex(("Fp", 0.9))
-        self.galaxyGraph.add_vertex(("NeO", 5))
-        self.galaxyGraph.add_vertex(("NeP", 2))
+        self.galaxyGraph.add_vertex(("NeO", 5.0))
+        self.galaxyGraph.add_vertex(("NeP", 2.0))
         self.galaxyGraph.add_vertex(("FlO", 0.1))
         self.galaxyGraph.add_vertex(("FlP", 0.0001))
-        self.galaxyGraph.add_vertex(("FiO", 1))
+        self.galaxyGraph.add_vertex(("FiO", 1.0))
         self.galaxyGraph.add_vertex(("FiP", 0.0002))
         self.galaxyGraph.add_vertex(("Fc", 0.1))
-        self.galaxyGraph.add_vertex(("LO", 1000000000))
-        self.galaxyGraph.add_vertex(("LP", 400))
+        self.galaxyGraph.add_vertex(("LO", 10000000000.0))
+        self.galaxyGraph.add_vertex(("LP", 400.0))
 
         """ Create all the variables """
         # R => Fp
@@ -64,8 +64,9 @@ class Simulator:
         if galaxy_property.get_edge(0):
             new_result_list = []
             next_property = galaxy_property.get_edge(0).end
-            old_result_list = self.__drake_equation(next_property)[1]
-            step_list = self.__drake_equation(next_property)[0]
+            random_result = self.__drake_equation(next_property)
+            old_result_list = random_result[1]
+            step_list = random_result[0]
             step_list.append(vertex)
             self.__multiply(value, old_result_list)
             new_result_list.extend(old_result_list)
@@ -79,15 +80,17 @@ class Simulator:
             new_result_list = []
             if factor == 1:
                 next_property = galaxy_property.get_edge(1).end
-                old_result_list.extend(self.__drake_equation(next_property)[1])
-                step_list = self.__drake_equation(next_property)[0]
+                result = self.__drake_equation(next_property)
+                old_result_list.extend(result[1])
+                step_list = result[0]
                 step_list.append(vertex)
                 self.__multiply(value, old_result_list)
                 new_result_list.extend(old_result_list)
             elif factor == -1:
                 next_property = galaxy_property.get_edge(-1).end
-                old_result_list.extend(self.__drake_equation(next_property)[1])
-                step_list = self.__drake_equation(next_property)[0]
+                result = self.__drake_equation(next_property)
+                old_result_list.extend(result[1])
+                step_list = result[0]
                 step_list.append(vertex)
                 self.__multiply(value, old_result_list)
                 new_result_list.extend(old_result_list)
@@ -103,8 +106,9 @@ class Simulator:
         if galaxy_property.get_edge(0):
             new_result_list = []
             next_property = galaxy_property.get_edge(0).end
-            old_result_list = self.__drake_equation_max(next_property)[1]
-            step_list = self.__drake_equation_max(next_property)[0]
+            result = self.__drake_equation_max(next_property)
+            old_result_list = result[1]
+            step_list = result[0]
             step_list.append(vertex)
             self.__multiply(value, old_result_list)
             new_result_list.extend(old_result_list)
@@ -114,8 +118,9 @@ class Simulator:
             new_result_list = []
             if galaxy_property.get_edge(1):
                 next_property = galaxy_property.get_edge(1).end
-                old_result_list.extend(self.__drake_equation_max(next_property)[1])
-                step_list = self.__drake_equation_max(next_property)[0]
+                result = self.__drake_equation_max(next_property)
+                old_result_list.extend(result[1])
+                step_list = result[0]
                 step_list.append(vertex)
                 self.__multiply(value, old_result_list)
                 new_result_list.extend(old_result_list)
@@ -131,8 +136,9 @@ class Simulator:
         if galaxy_property.get_edge(0):
             new_result_list = []
             next_property = galaxy_property.get_edge(0).end
-            old_result_list = self.__drake_equation_min(next_property)[1]
-            step_list = self.__drake_equation_min(next_property)[0]
+            result = self.__drake_equation_min(next_property)
+            old_result_list = result[1]
+            step_list = result[0]
             step_list.append(vertex)
             self.__multiply(value, old_result_list)
             new_result_list.extend(old_result_list)
@@ -142,8 +148,9 @@ class Simulator:
             new_result_list = []
             if galaxy_property.get_edge(-1):
                 next_property = galaxy_property.get_edge(-1).end
-                old_result_list.extend(self.__drake_equation_min(next_property)[1])
-                step_list = self.__drake_equation_min(next_property)[0]
+                result = self.__drake_equation_min(next_property)
+                old_result_list.extend(result[1])
+                step_list = result[0]
                 step_list.append(vertex)
                 self.__multiply(value, old_result_list)
                 new_result_list.extend(old_result_list)

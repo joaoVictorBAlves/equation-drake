@@ -1,6 +1,7 @@
 from Simulator import Simulator
 import pygame
 import os
+import time
 pygame.font.init()
 
 
@@ -13,6 +14,7 @@ FPS = 60
 FONT = pygame.font.SysFont("Arial", 15)
 FONT_VALUE = pygame.font.SysFont("Arial", 12)
 FONT_RESULT = pygame.font.SysFont("Arial", 18)
+
 """ Components vars """
 BACKGROUND = pygame.image.load(os.path.join('Assets', 'background.png'))
 TITLE = pygame.image.load(os.path.join('Assets', 'titulo.png'))
@@ -21,12 +23,13 @@ BTN_P = pygame.image.load(os.path.join('Assets', 'btnPessimista.png'))
 BTN_R = pygame.image.load(os.path.join('Assets', 'btnAleatorio.png'))
 DRAKE = pygame.image.load(os.path.join('Assets', 'drake.png'))
 RESULT_BALOON = pygame.image.load(os.path.join('Assets', 'resultBaloon.png'))
+
 """ State of the vertex """
-RESULT_LIST = []
 STEPS_LIST = []
 VERTEX_LIST = []
 EDGES_LIST = []
-RESULT = None
+RESULT = 0
+RESULT_TYPE = 0
 # Maybe these vars will change of position in code
 
 
@@ -43,11 +46,7 @@ def draw():
     draw_graph()
     """ Result """
     if RESULT:
-        WIN.blit(RESULT_BALOON, (640.5, 201.5))
-        text_value = FONT_RESULT.render(str(RESULT), 1, (255, 255, 255))
-        text_rect_value = text_value.get_rect(center=(741, 225))
-        WIN.blit(text_value, text_rect_value)
-
+        draw_result()
     pygame.display.update()
 
 
@@ -56,7 +55,8 @@ def draw_vertex(x, y, r, name, value):
     """ Circle """
     if name in STEPS_LIST:
         pygame.draw.circle(WIN, (21, 199, 17, 70), (x+r, y+r), r)
-    pygame.draw.circle(WIN, (0, 0, 0), (x + r, y + r), r)
+    else:
+        pygame.draw.circle(WIN, (0, 0, 0), (x + r, y + r), r)
     pygame.draw.circle(WIN, (255, 255, 255), (x+r, y+r), r, 2)
     """ Text """
     text_name = FONT.render(name, 1, (255, 255, 255))
@@ -105,29 +105,70 @@ def draw_graph():
     draw_vertex(502.42, 139, 28.79, VERTEX_LIST[9].data[0], VERTEX_LIST[9].data[1])
     draw_vertex(502.42, 254.15, 28.79, VERTEX_LIST[10].data[0], VERTEX_LIST[10].data[1])
 
+def draw_result():
+    if RESULT_TYPE == 1:
+        color = (0, 255, 0)
+    elif RESULT_TYPE == -1:
+        color = (255, 0, 0)
+    else:
+        color = (255, 255, 255)
+
+    WIN.blit(RESULT_BALOON, (640.5, 201.5))
+    text_value = FONT_RESULT.render(str(RESULT), 1, color)
+    text_rect_value = text_value.get_rect(center=(741, 225))
+    WIN.blit(text_value, text_rect_value)
+def equation(option=None):
+    global RESULT
+    global STEPS_LIST
+    global RESULT_TYPE
+    if option is None:
+        result = simulator.drake_equation()
+        RESULT = result[1]
+        STEPS_LIST = result[0]
+        RESULT_TYPE = 0
+    else:
+        if option == "MAX":
+            result = simulator.drake_equation(option)
+            RESULT = result[1]
+            STEPS_LIST = result[0]
+            RESULT_TYPE = 1
+        else:
+            result = simulator.drake_equation(option)
+            RESULT = result[1]
+            STEPS_LIST = result[0]
+            RESULT_TYPE = -1
+    print(RESULT)
+
+
 def main():
     clock = pygame.time.Clock()
+    global FPS
     run = True
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
         key_pressed = pygame.key.get_pressed()
+
         if key_pressed[pygame.K_o]:
-            pass
+            equation("MAX")
         if key_pressed[pygame.K_p]:
-            pass
+            equation("MIN")
         if key_pressed[pygame.K_a]:
-            pass
+            equation()
         """ Drawing in the screen """
         draw()
     pygame.quit()
 
 
 if __name__ == "__main__":
+    """ Start simulator """
     simulator = Simulator()
     simulator.start_world()
+    
     VERTEX_LIST = simulator.galaxyGraph.vertices
     EDGES_LIST = simulator.galaxyGraph.edges
+    """ Start game """
     main()
