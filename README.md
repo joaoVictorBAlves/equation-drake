@@ -1,5 +1,8 @@
 ﻿# Equation of Drake Simulator
+ 
 Este projeto foi desenvolvido em `Python` para a disciplina de `Estruturas de Dados`, lecionada pelo professor `Ernesto Trajano de Lima Neto`. O trabalho consiste em encontrar uma problemática presente no canal `Ciência todo dia` e realizar um algoritmo que ajude a resolver! O algoritmo deve utilizar alguma `Estrutura de Dados` que auxilie na resolução do problema e algum dos algoritmos aprendidos na disciplina.
+
+![UI do Simulador Equacao de Drake](https://user-images.githubusercontent.com/86852231/206710842-3f8b8996-5ef3-465c-8876-3e43836e02ad.png)
 
 ## O problema
 O problema escolhido foi baseado na pergunta, `Quais as possibilidades de haver vida inteligente no sistema solar?` Devido o consumo de filmes, livros e quadrinhos de `cultura pop` sobre aliens e viagens espaciais, eu achei esse questionamento super interessante e fiquei curioso para saber se havia algum `método` utilizado para fazer essas suposições!
