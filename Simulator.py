@@ -58,105 +58,69 @@ class Simulator:
         vertex = galaxy_property.data[0]
         value = galaxy_property.data[1]
         if len(galaxy_property.out_edges) == 0:
-            result_list = [value]
+            result = value
             step_list = [vertex]
-            return step_list, result_list
+            return step_list, result
         if galaxy_property.get_edge(0):
-            new_result_list = []
             next_property = galaxy_property.get_edge(0).end
-            random_result = self.__drake_equation(next_property)
-            old_result_list = random_result[1]
-            step_list = random_result[0]
+            next_results = self.__drake_equation(next_property)
+            result = value * next_results[1]
+            step_list = next_results[0]
             step_list.append(vertex)
-            self.__multiply(value, old_result_list)
-            new_result_list.extend(old_result_list)
-            return step_list, new_result_list
+            return step_list, result
         else:
             factor = 0
             while factor == 0:
                 factor = random.randint(-1, 1)
 
-            old_result_list = []
-            new_result_list = []
-            if factor == 1:
-                next_property = galaxy_property.get_edge(1).end
-                result = self.__drake_equation(next_property)
-                old_result_list.extend(result[1])
-                step_list = result[0]
-                step_list.append(vertex)
-                self.__multiply(value, old_result_list)
-                new_result_list.extend(old_result_list)
-            elif factor == -1:
-                next_property = galaxy_property.get_edge(-1).end
-                result = self.__drake_equation(next_property)
-                old_result_list.extend(result[1])
-                step_list = result[0]
-                step_list.append(vertex)
-                self.__multiply(value, old_result_list)
-                new_result_list.extend(old_result_list)
-            return step_list, new_result_list
+            next_property = galaxy_property.get_edge(factor).end
+            next_results = self.__drake_equation(next_property)
+            result = value * next_results[1]
+            step_list = next_results[0]
+            step_list.append(vertex)
+            return step_list, result
 
     def __drake_equation_max(self, galaxy_property):
         vertex = galaxy_property.data[0]
         value = galaxy_property.data[1]
         if len(galaxy_property.out_edges) == 0:
-            result_list = [value]
+            result = value
             step_list = [vertex]
-            return step_list, result_list
+            return step_list, result
         if galaxy_property.get_edge(0):
-            new_result_list = []
             next_property = galaxy_property.get_edge(0).end
-            result = self.__drake_equation_max(next_property)
-            old_result_list = result[1]
-            step_list = result[0]
+            next_results = self.__drake_equation_max(next_property)
+            result = value * next_results[1]
+            step_list = next_results[0]
             step_list.append(vertex)
-            self.__multiply(value, old_result_list)
-            new_result_list.extend(old_result_list)
-            return step_list, new_result_list
+            return step_list, result
         else:
-            old_result_list = []
-            new_result_list = []
-            if galaxy_property.get_edge(1):
-                next_property = galaxy_property.get_edge(1).end
-                result = self.__drake_equation_max(next_property)
-                old_result_list.extend(result[1])
-                step_list = result[0]
-                step_list.append(vertex)
-                self.__multiply(value, old_result_list)
-                new_result_list.extend(old_result_list)
-                return step_list, new_result_list
+            next_property = galaxy_property.get_edge(1).end
+            next_results = self.__drake_equation_max(next_property)
+            result = value * next_results[1]
+            step_list = next_results[0]
+            step_list.append(vertex)
+            return step_list, result
 
     def __drake_equation_min(self, galaxy_property):
         vertex = galaxy_property.data[0]
         value = galaxy_property.data[1]
         if len(galaxy_property.out_edges) == 0:
-            result_list = [value]
+            result = value
             step_list = [vertex]
-            return step_list, result_list
+            return step_list, result
         if galaxy_property.get_edge(0):
-            new_result_list = []
             next_property = galaxy_property.get_edge(0).end
-            result = self.__drake_equation_min(next_property)
-            old_result_list = result[1]
-            step_list = result[0]
+            next_results = self.__drake_equation_min(next_property)
+            result = value * next_results[1]
+            step_list = next_results[0]
             step_list.append(vertex)
-            self.__multiply(value, old_result_list)
-            new_result_list.extend(old_result_list)
-            return step_list, new_result_list
+            return step_list, result
         else:
-            old_result_list = []
-            new_result_list = []
-            if galaxy_property.get_edge(-1):
-                next_property = galaxy_property.get_edge(-1).end
-                result = self.__drake_equation_min(next_property)
-                old_result_list.extend(result[1])
-                step_list = result[0]
-                step_list.append(vertex)
-                self.__multiply(value, old_result_list)
-                new_result_list.extend(old_result_list)
-                return step_list, new_result_list
+            next_property = galaxy_property.get_edge(-1).end
+            next_results = self.__drake_equation_min(next_property)
+            result = value * next_results[1]
+            step_list = next_results[0]
+            step_list.append(vertex)
+            return step_list, result
 
-    @staticmethod
-    def __multiply(factor, array):
-        for i in range(len(array)):
-            array[i] = array[i] * factor
