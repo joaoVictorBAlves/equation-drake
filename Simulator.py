@@ -17,7 +17,7 @@ class Simulator:
         self.galaxyGraph.add_vertex(("FiO", 1.0))
         self.galaxyGraph.add_vertex(("FiP", 0.0002))
         self.galaxyGraph.add_vertex(("Fc", 0.1))
-        self.galaxyGraph.add_vertex(("LO", 10000000000.0))
+        self.galaxyGraph.add_vertex(("LO", 10e9))
         self.galaxyGraph.add_vertex(("LP", 400.0))
 
         """ Create all the variables """

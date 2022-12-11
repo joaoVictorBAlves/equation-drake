@@ -1,7 +1,6 @@
 from Simulator import Simulator
 import pygame
 import os
-import time
 pygame.font.init()
 
 
@@ -59,6 +58,8 @@ def draw_vertex(x, y, r, name, value):
         pygame.draw.circle(WIN, (0, 0, 0), (x + r, y + r), r)
     pygame.draw.circle(WIN, (255, 255, 255), (x+r, y+r), r, 2)
     """ Text """
+    if value == 10000000000:
+        value = "10e9"
     text_name = FONT.render(name, 1, (255, 255, 255))
     text_rect_name = text_name.get_rect(center=(x+r, y+r-12))
     WIN.blit(text_name, text_rect_name)
@@ -85,7 +86,7 @@ def draw_graph():
     draw_edge(200.14, 254.15, 275.71, 139, EDGES_LIST[5].weight)  # NeP >>  FlO
     draw_edge(200.14, 254.15, 275.71, 254.15, EDGES_LIST[6].weight)  # NeP >>  FlP
     draw_edge(275.71, 139, 351.28, 139, EDGES_LIST[7].weight)  # FlO >>  FiO
-    draw_edge(275.71, 254.15, 351.28, 254.15, EDGES_LIST[8].weight)  # FlO >>  FiP
+    draw_edge(275.71, 139, 351.28, 254.15, EDGES_LIST[8].weight)  # FlO >>  FiP
     draw_edge(275.71, 254.15, 351.28, 139, EDGES_LIST[9].weight)  # FlP >>  FiO
     draw_edge(275.71, 254.15, 351.28, 254.15, EDGES_LIST[10].weight)  # FlP >>  FiP
     draw_edge(351.28, 139, 426.85, 196.58, EDGES_LIST[11].weight)  # FiO >>  Fc
